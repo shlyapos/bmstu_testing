@@ -42,5 +42,5 @@ jobs:
     # Run testing on the code
     - name: Run testing
       run: |
-        cd backend/test
-        go test -v ./
+        cd backend
+        go test ./test/...
