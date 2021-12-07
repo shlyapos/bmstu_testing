@@ -1,4 +1,4 @@
-module describe.me
+module skema
 
 go 1.17
 

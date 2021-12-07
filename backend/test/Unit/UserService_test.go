@@ -3,13 +3,13 @@ package test
 import (
 	"testing"
 
-	"describe.me/app/model"
-	"describe.me/app/model/builder"
-	"describe.me/app/repo"
-	"describe.me/app/service"
-	"describe.me/database"
-	"describe.me/mocks"
-	"describe.me/util"
+	"skema/app/model"
+	"skema/app/model/builder"
+	"skema/app/repo"
+	"skema/app/service"
+	"skema/database"
+	"skema/mocks"
+	"skema/util"
 )
 
 func InitStabRepo() (repo.IUserRepo, error) {

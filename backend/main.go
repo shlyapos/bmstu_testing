@@ -3,8 +3,9 @@ package main
 import (
 	"log"
 
-	"describe.me/app"
-	"describe.me/config"
+	"skema/app"
+	"skema/config"
+
 	"github.com/joho/godotenv"
 )
 

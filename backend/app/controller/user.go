@@ -6,9 +6,10 @@ import (
 	"fmt"
 	"net/http"
 
-	"describe.me/app/repo"
-	"describe.me/app/service"
-	"describe.me/util"
+	"skema/app/repo"
+	"skema/app/service"
+	"skema/util"
+
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
 )

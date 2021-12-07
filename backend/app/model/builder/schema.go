@@ -1,6 +1,6 @@
 package builder
 
-import "describe.me/app/model"
+import "skema/app/model"
 
 type SchemaBuilder struct {
 	Id    uint

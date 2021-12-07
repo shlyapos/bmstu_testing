@@ -8,9 +8,10 @@ import (
 	"os/signal"
 	"syscall"
 
-	"describe.me/app/controller"
-	"describe.me/config"
-	"describe.me/database"
+	"skema/app/controller"
+	"skema/config"
+	"skema/database"
+
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
 	"go.mongodb.org/mongo-driver/mongo"

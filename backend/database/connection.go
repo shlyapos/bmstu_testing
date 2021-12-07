@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"describe.me/app/model"
+	"skema/app/model"
 	"github.com/jinzhu/gorm"
 	_ "github.com/mattn/go-sqlite3"
 	"go.mongodb.org/mongo-driver/mongo"

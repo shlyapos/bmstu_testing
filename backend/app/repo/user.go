@@ -1,8 +1,8 @@
 package repo
 
 import (
-	"describe.me/app/model"
 	"github.com/jinzhu/gorm"
+	"skema/app/model"
 )
 
 type IUserRepo interface {

@@ -1,8 +1,8 @@
 package service
 
 import (
-	"describe.me/app/model"
-	"describe.me/app/repo"
+	"skema/app/model"
+	"skema/app/repo"
 )
 
 type UserService struct {
