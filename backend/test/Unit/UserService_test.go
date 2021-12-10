@@ -12,7 +12,7 @@ import (
 	"skema/util"
 )
 
-func InitStabRepo() (repo.IUserRepo, error) {
+func initStubRepo() (repo.IUserRepo, error) {
 	db, err := database.StubConnection()
 
 	if err != nil {
@@ -22,29 +22,25 @@ func InitStabRepo() (repo.IUserRepo, error) {
 	return repo.NewUserRepo(db), nil
 }
 
-func InitMockRepo() repo.IUserRepo {
-	return new(mocks.IUserRepo)
-}
-
-func InitTestData(serv *service.UserService) {
+func initUserTestData(repo repo.IUserRepo) {
 	objMother := new(builder.UserMother)
 
-	serv.CreateUser(objMother.Obj0())
-	serv.CreateUser(objMother.Obj1())
-	serv.CreateUser(objMother.Obj2())
+	repo.Create(objMother.Obj0())
+	repo.Create(objMother.Obj1())
+	repo.Create(objMother.Obj2())
 }
 
 // Classic style with stab
 
 func TestGetUserById(t *testing.T) {
-	repo, err := InitStabRepo()
+	repo, err := initStubRepo()
 
 	if err != nil {
 		t.Error("Error: ", err)
 	}
 
+	initUserTestData(repo)
 	serv := service.NewUserService(repo)
-	InitTestData(serv)
 
 	user, err := serv.TakeUserById(1)
 
@@ -54,14 +50,14 @@ func TestGetUserById(t *testing.T) {
 }
 
 func TestGetUserByRating(t *testing.T) {
-	repo, err := InitStabRepo()
+	repo, err := initStubRepo()
 
 	if err != nil {
 		t.Error("Error: ", err)
 	}
 
+	initUserTestData(repo)
 	serv := service.NewUserService(repo)
-	InitTestData(serv)
 
 	users, err := serv.TakeUserRatingMoreThan(10)
 
