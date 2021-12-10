@@ -1,8 +1,9 @@
 package repo
 
 import (
-	"github.com/jinzhu/gorm"
 	"skema/app/model"
+
+	"github.com/jinzhu/gorm"
 )
 
 type IUserRepo interface {
@@ -28,7 +29,7 @@ func (repo *UserRepo) Create(data *model.User) error {
 
 func (repo *UserRepo) TakeOneById(id uint) (*model.User, error) {
 	user := new(model.User)
-	err := repo.Database.Where("id = ?", id).Find(user).Error
+	err := repo.Database.Where("id = ?", id).First(user).Error
 
 	return user, err
 }
