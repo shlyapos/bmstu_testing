@@ -13,7 +13,7 @@ type InfoLogger struct {
 func NewInfoLogger() *InfoLogger {
 	infoLogger := new(InfoLogger)
 
-	f, err := os.OpenFile("../../logs/info.log", os.O_RDWR|os.O_CREATE, 0666)
+	f, err := os.OpenFile("./info.log", os.O_RDWR|os.O_CREATE, 0666)
 
 	if err != nil {
 		log.Fatal(err)
