@@ -49,3 +49,8 @@ jobs:
       run: |
         cd backend
         go test ./test/integration/
+
+    - name: Run e2e testing
+      run: |
+        cd backend
+        go test ./test/e2e/

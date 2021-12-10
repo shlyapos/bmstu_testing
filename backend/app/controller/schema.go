@@ -3,9 +3,10 @@ package controller
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
+	"strconv"
 
+	"skema/app/model"
 	"skema/app/repo"
 	"skema/app/service"
 	"skema/util"
@@ -43,7 +44,9 @@ func InitSchemaController(r *mux.Router, db *gorm.DB) {
 }
 
 func (ctrl *SchemaController) createSchema(res http.ResponseWriter, req *http.Request) {
-	var schema Schema
+	util.Logger.WriteInfoLog("Received a request", "SchemaController", "createSchema")
+
+	schema := new(model.Schema)
 	var unmarshalErr *json.UnmarshalTypeError
 
 	decoder := json.NewDecoder(req.Body)
@@ -52,6 +55,8 @@ func (ctrl *SchemaController) createSchema(res http.ResponseWriter, req *http.Re
 	err := decoder.Decode(&schema)
 
 	if err != nil {
+		util.Logger.WriteInfoLog("Error request", "SchemaController", "createSchema")
+
 		if errors.As(err, &unmarshalErr) {
 			util.SetResponse(res, "Bad Request. Wrong Type provided for field "+unmarshalErr.Field, http.StatusBadRequest)
 		} else {
@@ -60,10 +65,35 @@ func (ctrl *SchemaController) createSchema(res http.ResponseWriter, req *http.Re
 		return
 	}
 
-	fmt.Println(schema)
+	err = ctrl.service.CreateSchema(schema)
+
+	if err != nil {
+		util.SetResponse(res, "Bad Request "+err.Error(), http.StatusBadRequest)
+	}
+
+	util.Logger.WriteInfoLog("Success request", "SchemaController", "createSchema")
 	util.SetResponse(res, "Success", http.StatusOK)
 }
 
 func (ctrl *SchemaController) getSchemaById(res http.ResponseWriter, req *http.Request) {
+	util.Logger.WriteInfoLog("Received a request", "SchemaController", "getSchemaById")
 
+	params := mux.Vars(req)
+	id64, err := strconv.ParseUint(params["id"], 10, 64)
+
+	if err != nil {
+		util.Logger.WriteInfoLog("Error convert", "SchemaController", "getSchemaById")
+		util.SetResponse(res, "Bad Request "+err.Error(), http.StatusBadRequest)
+	}
+
+	id := uint(id64)
+	schema, err := ctrl.service.TakeSchemaById(id)
+
+	if err != nil {
+		util.Logger.WriteInfoLog("Error request", "SchemaController", "getSchemaById")
+		util.SetResponse(res, "Bad Request "+err.Error(), http.StatusBadRequest)
+	}
+
+	util.Logger.WriteInfoLog("Success request", "SchemaController", "getSchemaById")
+	util.SetResonseData(res, schema, http.StatusOK)
 }
