@@ -1,7 +1,6 @@
 package app
 
 import (
-	"context"
 	"log"
 	"net/http"
 	"os"
@@ -32,7 +31,14 @@ func InitAndRun(config *config.Config) {
 }
 
 func (app *App) Init(config *config.Config) {
-	app.DatabaseMongo = database.InitialConnect("golang", config.MongoHost)
+	// app.DatabaseMongo = database.InitialConnect("golang", config.MongoHost)
+	db, err := database.StubConnection()
+
+	if err != nil {
+		log.Printf("Error database init")
+	}
+
+	app.DatabaseGorm = db
 
 	app.Router = mux.NewRouter()
 	app.SetRouters()
@@ -40,7 +46,7 @@ func (app *App) Init(config *config.Config) {
 
 func (app *App) SetRouters() {
 	controller.InitUserController(app.Router, app.DatabaseGorm)
-	controller.InitSchemaController(app.Router)
+	controller.InitSchemaController(app.Router, app.DatabaseGorm)
 }
 
 func (app *App) Run(host string) {
@@ -56,8 +62,8 @@ func (app *App) Run(host string) {
 	sig := <-sigs
 	log.Println("Signal:", sig)
 
-	log.Println("Stoping MongoDB Connection...")
-	app.DatabaseMongo.Client().Disconnect(context.Background())
+	// log.Println("Stoping MongoDB Connection...")
+	// app.DatabaseMongo.Client().Disconnect(context.Background())
 }
 
 func (app *App) createIndexes() {

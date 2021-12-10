@@ -24,6 +24,8 @@ type User struct {
 	Password string `json:"password"`
 }
 
+var infoLogger = util.NewInfoLogger()
+
 func NewUserController(db *gorm.DB) *UserController {
 	ctrl := new(UserController)
 

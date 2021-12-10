@@ -6,10 +6,12 @@ import (
 	"fmt"
 	"net/http"
 
+	"skema/app/repo"
 	"skema/app/service"
 	"skema/util"
 
 	"github.com/gorilla/mux"
+	"github.com/jinzhu/gorm"
 )
 
 type SchemaController struct {
@@ -22,15 +24,19 @@ type Schema struct {
 	Owner int    `json:"owner"`
 }
 
-func NewSchemaController() *SchemaController {
+func NewSchemaController(db *gorm.DB) *SchemaController {
 	ctrl := new(SchemaController)
-	ctrl.service = service.NewSchemaService()
+
+	schemaRepo := repo.NewSchemaRepo(db)
+	commentRepo := repo.NewCommentRepo(db)
+
+	ctrl.service = service.NewSchemaService(schemaRepo, commentRepo)
 
 	return ctrl
 }
 
-func InitSchemaController(r *mux.Router) {
-	ctrl := NewSchemaController()
+func InitSchemaController(r *mux.Router, db *gorm.DB) {
+	ctrl := NewSchemaController(db)
 
 	r.HandleFunc("/schema", ctrl.createSchema).Methods("POST")
 	r.HandleFunc("/schema/{id}", ctrl.getSchemaById).Methods("GET")
