@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"skema/app/model"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/mattn/go-sqlite3"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -33,6 +34,10 @@ func InitConnection() (*gorm.DB, error) {
 
 func StubConnection() (*gorm.DB, error) {
 	db, err := gorm.Open("sqlite3", ":memory:?cache=shared")
-	db.AutoMigrate(model.User{})
+	db.AutoMigrate(
+		model.User{},
+		model.Schema{},
+		model.Comment{},
+	)
 	return db, err
 }
