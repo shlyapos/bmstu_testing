@@ -43,9 +43,9 @@ jobs:
     - name: Run unit testing
       run: |
         cd backend
-        go test ./test/unit/...
+        go test ./test/unit/
 
     - name: Run integration testing
       run: |
         cd backend
-        go test ./test/integration/...
+        go test ./test/integration/
