@@ -4,7 +4,7 @@ import "skema/app/model"
 
 type SchemaBuilder struct {
 	Id    uint
-	Owner string
+	Owner uint
 	Name  string
 }
 
@@ -21,7 +21,7 @@ type SchemaMother struct{}
 func (m *SchemaMother) Obj0() *model.Schema {
 	builder := SchemaBuilder{
 		Id:    1,
-		Owner: "vad_stoke",
+		Owner: 2,
 		Name:  "Uml class schema",
 	}
 
@@ -31,7 +31,7 @@ func (m *SchemaMother) Obj0() *model.Schema {
 func (m *SchemaMother) Obj1() *model.Schema {
 	builder := SchemaBuilder{
 		Id:    2,
-		Owner: "shlyapik",
+		Owner: 1,
 		Name:  "Er model template for database",
 	}
 
@@ -41,7 +41,7 @@ func (m *SchemaMother) Obj1() *model.Schema {
 func (m *SchemaMother) Obj2() *model.Schema {
 	builder := SchemaBuilder{
 		Id:    3,
-		Owner: "vad_stoke",
+		Owner: 2,
 		Name:  "Use case diagram",
 	}
 
@@ -51,7 +51,7 @@ func (m *SchemaMother) Obj2() *model.Schema {
 func (m *SchemaMother) Obj3() *model.Schema {
 	builder := SchemaBuilder{
 		Id:    4,
-		Owner: "toxa_31",
+		Owner: 3,
 		Name:  "Use case diagram for sites with logic",
 	}
 
