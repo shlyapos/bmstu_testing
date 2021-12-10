@@ -40,7 +40,12 @@ jobs:
         go build -v ./ 
     
     # Run testing on the code
-    - name: Run testing
+    - name: Run unit testing
       run: |
         cd backend
-        go test ./test/...
+        go test ./test/unit/...
+
+    - name: Run integration testing
+      run: |
+        cd backend
+        go test ./test/integration/...
