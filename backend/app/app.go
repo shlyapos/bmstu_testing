@@ -13,14 +13,11 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/x/bsonx"
 )
 
 type App struct {
-	Router        *mux.Router
-	DatabaseMongo *mongo.Database
-	DatabaseGorm  *gorm.DB
+	Router       *mux.Router
+	DatabaseGorm *gorm.DB
 }
 
 func InitAndRun(config *config.Config) {
@@ -31,7 +28,6 @@ func InitAndRun(config *config.Config) {
 }
 
 func (app *App) Init(config *config.Config) {
-	// app.DatabaseMongo = database.InitialConnect("golang", config.MongoHost)
 	db, err := database.StubConnection()
 
 	if err != nil {
@@ -61,18 +57,4 @@ func (app *App) Run(host string) {
 	log.Printf("Server is listening on %s\n", host)
 	sig := <-sigs
 	log.Println("Signal:", sig)
-
-	// log.Println("Stoping MongoDB Connection...")
-	// app.DatabaseMongo.Client().Disconnect(context.Background())
-}
-
-func (app *App) createIndexes() {
-	// username and email will be unique.
-	keys := bsonx.Doc{
-		{Key: "username", Value: bsonx.Int32(1)},
-		{Key: "email", Value: bsonx.Int32(1)},
-	}
-
-	user := app.DatabaseMongo.Collection("user")
-	database.SetIndexes(user, keys)
 }
