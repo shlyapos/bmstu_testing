@@ -10,11 +10,14 @@ import (
 	"testing"
 )
 
-func TestSchemaCreateSuccess(t *testing.T) {
+func init() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
 	config := config.NewConfig()
 	go app.InitAndRun(config)
+}
+
+func TestSchemaCreateSuccess(t *testing.T) {
 
 	message := map[string]interface{}{
 		"name":  "Uml class diagram",
@@ -34,5 +37,13 @@ func TestSchemaCreateSuccess(t *testing.T) {
 
 	if errRequest != nil || resp.StatusCode != http.StatusOK {
 		t.Error(resp)
+	}
+}
+
+func BenchmarkTestSchemaCreate(b *testing.B) {
+	t := new(testing.T)
+
+	for i := 0; i < b.N; i++ {
+		TestSchemaCreateSuccess(t)
 	}
 }
