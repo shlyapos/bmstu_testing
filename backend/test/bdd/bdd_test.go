@@ -12,12 +12,14 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("Schema test", func() {
+func init() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
 	config := config.NewConfig()
 	go app.InitAndRun(config)
+}
 
+var _ = Describe("Schema test", func() {
 	message := map[string]interface{}{
 		"name":  "Uml class diagram",
 		"owner": 1,
